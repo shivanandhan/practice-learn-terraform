@@ -7,7 +7,7 @@
 #   }
 # }
 provider "vault" {
-  address = "https://172.31.47.41:8200"
+  address = "https://172.31.90.69:8200"
   token = var.vault_token
   skip_tls_verify = true
 }
@@ -21,6 +21,6 @@ data "vault_kv_secret_v2" "example" {
 
 
 resource "local_file" "foo" {
-  content  =  data.vault_kv_secret_v2.example.data["password"]
+  content  =  jsoncode(data.vault_kv_secret_v2.example.data_json)
   filename = "/tmp/secret"
 }
