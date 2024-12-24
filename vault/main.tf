@@ -21,6 +21,6 @@ data "vault_kv_secret_v2" "example" {
 
 
 resource "local_file" "foo" {
-  content  =  jsoncode(data.vault_kv_secret_v2.example.data_json)
+  content  =  data.vault_kv_secret_v2.example.data["password"]
   filename = "/tmp/secret"
 }
