@@ -14,12 +14,11 @@ provider "vault" {
 
 variable "vault_token"{}
 
-data "vault_kv_secret_v2" "example" {
-  name  = "my_credentials"
-  mount = "test"
+data "vault_generic_secret" "example" {
+  path  = "test/my_credentials"
 }
 
 resource "local_file" "foo" {
-  content  =  jsonencode(data.vault_kv_secret_v2.example.data_json)
+  content  =  data.vault_generic_secret.example.data["password"]
   filename = "/tmp/secret"
 }
